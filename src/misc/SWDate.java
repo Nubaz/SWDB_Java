@@ -1,45 +1,39 @@
 package misc;
 
+import enums.StarWarsEra;
+
 import java.util.Locale;
 
 public class SWDate {
     private Integer year;
-    private String era;
+    private StarWarsEra era;
 
+    //basic constructors
     public SWDate() {
     }
 
-    public SWDate(Integer year, String era) throws Exp {
-        if(year < 0)
-            throw new Exp("Invalid year!");
-        else
-            this.year = year;
-        if(era.toLowerCase(Locale.ROOT).equals("aby") || era.toLowerCase(Locale.ROOT).equals("bby"))
-            this.era = era.toUpperCase(Locale.ROOT);
-        else
-            throw new Exp("Invalid era for year!");
+    public SWDate(Integer year, StarWarsEra era) {
+
+        this.year = year;
+        this.era = era;
+
     }
 
+    //getters and setters
     public Integer getYear() {
         return year;
     }
 
-    public void setYear(Integer year) throws Exp {
-        if(year < 0)
-            throw new Exp("Invalid year!");
-        else
-            this.year = year;
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
-    public String getEra() {
+    public StarWarsEra getEra() {
         return era;
     }
 
-    public void setEra(String era) throws Exp {
-        if(era.toLowerCase(Locale.ROOT).equals("aby") || era.toLowerCase(Locale.ROOT).equals("bby"))
-            this.era = era.toUpperCase(Locale.ROOT);
-        else
-            throw new Exp("Invalid era for year!");
+    public void setEra(StarWarsEra era) {
+        this.era = era;
     }
 
     @Override
