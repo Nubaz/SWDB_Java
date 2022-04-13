@@ -1,12 +1,17 @@
 package characters;
 
+import enums.JediSithRank;
 import enums.StarWarsEra;
 import enums.ForceUserType;
+import misc.BadRankExp;
 import weapons.Lightsaber;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class JediSith extends ForceUser {
     private ForceUserType type;
-    private String rank;
+    private JediSithRank rank;
     private Lightsaber lightsaber;
 
     //basic constructors
@@ -14,26 +19,49 @@ public class JediSith extends ForceUser {
     }
 
     public JediSith(String name, String planet, Integer year, StarWarsEra era, Integer yrs_practice, boolean permadeath,
-                    ForceUserType type, String rank) {
+                    ForceUserType type, JediSithRank rank, Lightsaber lightsaber) throws BadRankExp {
         super(name, planet, year, era, yrs_practice, permadeath);
         this.type = type;
         this.rank = rank;
+        verifyRank();
+        this.lightsaber = lightsaber;
+
+        calculateBounty();
     }
 
-    public JediSith(String name, String planet, Integer year, StarWarsEra era, Integer yrs_practice, boolean permadeath,
-                    ForceUserType type, String rank, Lightsaber lightsaber) {
-        super(name, planet, year, era, yrs_practice, permadeath);
-        this.type = type;
-        this.rank = rank;
-        this.lightsaber = lightsaber;
+    //verify rank
+    private void verifyRank() throws BadRankExp {
+        Pattern p;
+        Matcher m;
+
+        if(type == ForceUserType.Jedi){
+            p = Pattern.compile("^[S]");
+            m = p.matcher(rank.name());
+            if(m.find())
+                throw new BadRankExp("Jedi types can't have Sith ranks");
+        }
+        else {
+            p = Pattern.compile("^[J]");
+            m = p.matcher(rank.name());
+            if(m.find())
+                throw new BadRankExp("Sith types can't have Jedi ranks");
+        }
     }
+
+    //bounty calculator
+//    @Override
+//    protected void calculateBounty() {
+//        this.bounty = (double) (yrs_practice * credits);
+//        this.bounty += this.bounty * type.factor;
+//        this.bounty += this.bounty * rank.factor;
+//    }
 
     //getters and setters
-    public String getRank() {
+    public Object getRank() {
         return rank;
     }
 
-    public void setRank(String rank) {
+    public void setRank(JediSithRank rank) {
         this.rank = rank;
     }
 
@@ -49,6 +77,8 @@ public class JediSith extends ForceUser {
     public String toString() {
         return super.toString() + "\n" +
                 "Type: " + type + "\n" +
-                "Rank: " + rank + "\n" + lightsaber;
+                "Rank: " + rank.name + "\n" +
+                lightsaber + "\n" +
+                "Bounty: " + bounty + " credits";
     }
 }

@@ -12,21 +12,18 @@ public class BountyHunter extends Character {
     public BountyHunter() {
     }
 
-    public BountyHunter(String name, String planet, Integer year, StarWarsEra era, Integer contracts,
-                        Integer min_credits_per_target) {
-        super(name, planet, year, era);
-        occupation = "Bounty Hunter";
-
-        this.contracts = contracts;
-        this.min_credits = min_credits_per_target;
-    }
-
     public BountyHunter(String name, String planet, Integer year, StarWarsEra era, Integer contracts, Integer min_credits,
                         String bname, String type, Integer shots, Double cooldown) {
         super(name, planet, year, era);
         this.contracts = contracts;
         this.min_credits = min_credits;
         weapon = new Blaster(bname,type,shots,cooldown);
+    }
+
+    //bounty calculator
+    @Override
+    protected void calculateBounty() {
+
     }
 
     //getters and setters

@@ -3,16 +3,11 @@ package characters;
 import enums.StarWarsEra;
 
 public class ForceUser extends Character {
-    private Integer yrs_practice;
-    private boolean permadeath;
+    protected Integer yrs_practice;
+    protected boolean permadeath;
 
     //basic constructors
     public ForceUser() {
-    }
-
-    public ForceUser(String name, String planet, Integer year, StarWarsEra era) {
-        super(name, planet, year, era);
-        occupation = "Force User";
     }
 
     public ForceUser(String name, String planet, Integer year, StarWarsEra era, Integer yrs_practice, boolean permadeath) {
@@ -21,6 +16,14 @@ public class ForceUser extends Character {
 
         this.yrs_practice = yrs_practice;
         this.permadeath = permadeath;
+
+        calculateBounty();
+    }
+
+    //bounty calculator
+    @Override
+    protected void calculateBounty() {
+        this.bounty = (double) (yrs_practice * credits);
     }
 
     //getters and setters

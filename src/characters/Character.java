@@ -8,6 +8,10 @@ public abstract class Character {
     protected SWDate born = new SWDate();
     protected String occupation;
 
+    protected Double bounty;
+    protected final Integer credits = 2500;
+
+    //basic constructors
     public Character() {
     }
 
@@ -17,6 +21,9 @@ public abstract class Character {
         born.setYear(year);
         born.setEra(era);
     }
+
+    //bounty calculator
+    protected abstract void calculateBounty();
 
     @Override
     public String toString() {
