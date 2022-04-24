@@ -9,6 +9,7 @@ public abstract class Character {
     protected String occupation;
 
     protected Double bounty;
+    //fixed nr of credits for bounty calculation
     protected final Integer credits = 2500;
 
     //basic constructors
@@ -24,6 +25,7 @@ public abstract class Character {
 
     //bounty calculator
     protected abstract void calculateBounty();
+    public abstract void showBountyCalculation();
 
     @Override
     public String toString() {

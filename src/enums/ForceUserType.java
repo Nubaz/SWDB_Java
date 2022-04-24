@@ -1,7 +1,7 @@
 package enums;
 
 public enum ForceUserType {
-    Jedi(0.35), Sith(0.50);
+    Jedi(1.35), Sith(1.50);
 
     public final Double factor;
 

@@ -26,7 +26,7 @@ public class JediSith extends ForceUser {
         verifyRank();
         this.lightsaber = lightsaber;
 
-        calculateBounty();
+        calculateBounty2();
     }
 
     //verify rank
@@ -49,24 +49,42 @@ public class JediSith extends ForceUser {
     }
 
     //bounty calculator
-//    @Override
-//    protected void calculateBounty() {
-//        this.bounty = (double) (yrs_practice * credits);
-//        this.bounty += this.bounty * type.factor;
-//        this.bounty += this.bounty * rank.factor;
-//    }
+    protected void calculateBounty2() {
+        this.bounty *= type.factor;
+        this.bounty *= rank.factor;
+    }
+
+    @Override
+    public void showBountyCalculation() {
+        System.out.println("Bounty calculation:\n" +
+                "Years of practice: " + yrs_practice + "\n" +
+                "Type factor: " + type.name() + ", " + type.factor + "\n" +
+                "Rank factor: " + rank.name + ", " + rank.factor + "\n" +
+                "Credits: " + credits + "\n" +
+                "Bounty = " + yrs_practice + " * " + type.factor + " * " + rank.factor + " * " +
+                credits + " = " + bounty);
+    }
 
     //getters and setters
-    public Object getRank() {
+    public ForceUserType getType() {
+        return type;
+    }
+
+    public void setType(ForceUserType type) {
+        this.type = type;
+    }
+
+    public JediSithRank getRank() {
         return rank;
     }
 
     public void setRank(JediSithRank rank) {
         this.rank = rank;
+        calculateBounty();
     }
 
-    public String getLightsaber() {
-        return lightsaber.toString();
+    public Lightsaber getLightsaber() {
+        return lightsaber;
     }
 
     public void setLightsaber(Lightsaber lightsaber) {

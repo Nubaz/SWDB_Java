@@ -13,10 +13,8 @@ public class SWDate {
     }
 
     public SWDate(Integer year, StarWarsEra era) {
-
         this.year = year;
         this.era = era;
-
     }
 
     //getters and setters

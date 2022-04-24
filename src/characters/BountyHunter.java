@@ -4,47 +4,57 @@ import enums.StarWarsEra;
 import weapons.Blaster;
 
 public class BountyHunter extends Character {
-    private Integer contracts;
-    private Integer min_credits;
+    private Integer contracts_done;
+    private Integer min_credits_contract;
     private Blaster weapon;
 
     //basic constructors
     public BountyHunter() {
+        occupation = "Bounty Hunter";
     }
 
-    public BountyHunter(String name, String planet, Integer year, StarWarsEra era, Integer contracts, Integer min_credits,
-                        String bname, String type, Integer shots, Double cooldown) {
+    public BountyHunter(String name, String planet, Integer year, StarWarsEra era, Integer contracts, Integer min_credits_contract,
+                        Blaster blaster) {
         super(name, planet, year, era);
-        this.contracts = contracts;
-        this.min_credits = min_credits;
-        weapon = new Blaster(bname,type,shots,cooldown);
+        occupation = "Bounty Hunter";
+        this.contracts_done = contracts;
+        this.min_credits_contract = min_credits_contract;
+        this.weapon = blaster;
+
+        calculateBounty();
     }
 
     //bounty calculator
     @Override
     protected void calculateBounty() {
-
+        this.bounty = (double) contracts_done * credits;
     }
+    @Override
+    public void showBountyCalculation() {
+        System.out.println("Bounty calculation:\n" +
+                "Contracts done: " + contracts_done + "\n" +
+                "Bounty = " + contracts_done + " * " + credits + " = " + bounty);
+    };
 
     //getters and setters
-    public Integer getContracts() {
-        return contracts;
+    public Integer getContracts_done() {
+        return contracts_done;
     }
 
-    public void setContracts(Integer contracts) {
-        this.contracts = contracts;
+    public void setContracts_done(Integer contracts_done) {
+        this.contracts_done = contracts_done;
     }
 
-    public Integer getMin_credits() {
-        return min_credits;
+    public Integer getMin_credits_contract() {
+        return min_credits_contract;
     }
 
-    public void setMin_credits(Integer min_credits) {
-        this.min_credits = min_credits;
+    public void setMin_credits_contract(Integer min_credits_contract) {
+        this.min_credits_contract = min_credits_contract;
     }
 
-    public String getWeapon() {
-        return weapon.toString();
+    public Blaster getWeapon() {
+        return weapon;
     }
 
     public void setWeapon(Blaster weapon) {
@@ -54,7 +64,9 @@ public class BountyHunter extends Character {
     @Override
     public String toString() {
         return super.toString() + "\n" +
-                "Contracts fulfilled: " + contracts + "\n" +
-                "Minimum credits per target: " + min_credits + "\n" + weapon;
+                "Contracts fulfilled: " + contracts_done + "\n" +
+                "Minimum credits per target: " + min_credits_contract + "\n"
+                + weapon + "\n" +
+                "Bounty: " + bounty + " credits";
     }
 }

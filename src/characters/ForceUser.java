@@ -8,6 +8,7 @@ public class ForceUser extends Character {
 
     //basic constructors
     public ForceUser() {
+        occupation = "Force User";
     }
 
     public ForceUser(String name, String planet, Integer year, StarWarsEra era, Integer yrs_practice, boolean permadeath) {
@@ -25,10 +26,18 @@ public class ForceUser extends Character {
     protected void calculateBounty() {
         this.bounty = (double) (yrs_practice * credits);
     }
+    @Override
+    public void showBountyCalculation() {
+        System.out.println("Bounty calculation:\n" +
+                "Years of practice: " + yrs_practice + "\n" +
+                "Credits: " + credits + "\n" +
+                "Bounty = " + yrs_practice + " * " + credits + " = " + bounty);
+    }
 
     //getters and setters
     public void setYrs_practice(Integer yrs_practice) {
         this.yrs_practice = yrs_practice;
+        calculateBounty();
     }
 
     public Integer getYrs_practice() {
@@ -47,6 +56,6 @@ public class ForceUser extends Character {
     public String toString() {
         return super.toString() + "\n" +
                 "Years of practice: " + yrs_practice + "\n" +
-                "Can live after death: " + permadeath;
+                "Can live in the Force after death: " + permadeath;
     }
 }
