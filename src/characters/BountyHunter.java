@@ -13,6 +13,15 @@ public class BountyHunter extends Character {
         occupation = "Bounty Hunter";
     }
 
+    public BountyHunter(String name, String planet, Integer year, StarWarsEra era, Integer contracts_done, Integer min_credits_contract) {
+        super(name, planet, year, era);
+        occupation = "Bounty Hunter";
+        this.contracts_done = contracts_done;
+        this.min_credits_contract = min_credits_contract;
+
+        calculateBounty();
+    }
+
     public BountyHunter(String name, String planet, Integer year, StarWarsEra era, Integer contracts, Integer min_credits_contract,
                         Blaster blaster) {
         super(name, planet, year, era);
@@ -63,10 +72,16 @@ public class BountyHunter extends Character {
 
     @Override
     public String toString() {
-        return super.toString() + "\n" +
-                "Contracts fulfilled: " + contracts_done + "\n" +
-                "Minimum credits per target: " + min_credits_contract + "\n"
-                + weapon + "\n" +
-                "Bounty: " + bounty + " credits";
+        if(weapon == null)
+            return super.toString() + "\n" +
+                    "Contracts fulfilled: " + contracts_done + "\n" +
+                    "Minimum credits per target: " + min_credits_contract + "\n" +
+                    "Bounty: " + bounty + " credits" + "\n";
+        else
+            return super.toString() + "\n" +
+                    "Contracts fulfilled: " + contracts_done + "\n" +
+                    "Minimum credits per target: " + min_credits_contract + "\n" +
+                    weapon + "\n" +
+                    "Bounty: " + bounty + " credits" + "\n";
     }
 }

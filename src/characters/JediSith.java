@@ -19,6 +19,16 @@ public class JediSith extends ForceUser {
     }
 
     public JediSith(String name, String planet, Integer year, StarWarsEra era, Integer yrs_practice, boolean permadeath,
+                    ForceUserType type, JediSithRank rank) throws BadRankExp {
+        super(name, planet, year, era, yrs_practice, permadeath);
+        this.type = type;
+        this.rank = rank;
+        verifyRank();
+
+        calculateBounty2();
+    }
+
+    public JediSith(String name, String planet, Integer year, StarWarsEra era, Integer yrs_practice, boolean permadeath,
                     ForceUserType type, JediSithRank rank, Lightsaber lightsaber) throws BadRankExp {
         super(name, planet, year, era, yrs_practice, permadeath);
         this.type = type;
@@ -93,10 +103,16 @@ public class JediSith extends ForceUser {
 
     @Override
     public String toString() {
-        return super.toString() + "\n" +
-                "Type: " + type + "\n" +
-                "Rank: " + rank.name + "\n" +
-                lightsaber + "\n" +
-                "Bounty: " + bounty + " credits";
+        if(lightsaber == null)
+            return super.toString() + "\n" +
+                    "Type: " + type + "\n" +
+                    "Rank: " + rank.name + "\n" +
+                    "Bounty: " + bounty + " credits" + "\n";
+        else
+            return super.toString() + "\n" +
+                    "Type: " + type + "\n" +
+                    "Rank: " + rank.name + "\n" +
+                    lightsaber + "\n" +
+                    "Bounty: " + bounty + " credits" + "\n";
     }
 }
