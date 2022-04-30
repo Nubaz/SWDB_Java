@@ -7,10 +7,12 @@ import weapons.Blaster;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.function.Predicate;
 
 public class BountyHunterService {
     ArrayList<BountyHunter> v = new ArrayList<>();
+    HashMap<Blaster, BountyHunter> map = new HashMap<>();
 
     //create
     public void addBH(BountyHunter b) {
@@ -67,9 +69,28 @@ public class BountyHunterService {
                 .forEach(System.out::println);
     }
 
+    public void listMap() {
+        map.forEach((b, bh) -> System.out.println(
+                bh.getName() + "\n" +
+                "Blaster: " + b.getName() + ", " + b.getType() + ", " + b.getShots() + ", " + b.getCooldown()
+        ));
+    }
+
     //update
     public void addBlaster(int i, Blaster b) {
-        v.get(i).setWeapon(b);
+        if(map.containsKey(b)) {
+            System.out.println("Can't add: blaster already attached to someone");
+        }
+        else {
+            v.get(i).setWeapon(b);
+            map.put(b, v.get(i));
+        }
+    }
+    public void replaceOwner(Blaster b, BountyHunter bh) {
+        if(!map.containsKey(b))
+            System.out.println("Can't replace: blaster isn't mapped to a bounty hunter");
+        else
+            map.replace(b, bh);
     }
 
     //delete

@@ -8,10 +8,12 @@ import weapons.Lightsaber;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.function.Predicate;
 
 public class JediSithService {
     ArrayList<JediSith> v = new ArrayList<>();
+    HashMap<Lightsaber, JediSith> map = new HashMap<>();
 
     //create
     public void addJS(JediSith js) {
@@ -75,9 +77,28 @@ public class JediSithService {
                 .forEach(System.out::println);
     }
 
+    public void listMap() {
+        map.forEach((l, js) -> System.out.println(
+                js.getType() + ": " + js.getRank() + ", " + js.getName() + "\n" +
+                "Lightsaber: " + l.getType() + ", " + l.getHilt() + ", " + l.getColor()
+        ));
+    }
+
     //update
-    public void addLightsaber(int i, Lightsaber l) {
-        v.get(i).setLightsaber(l);
+    public void addLightsaber(Lightsaber l, int i) {
+        if(map.containsKey(l)) {
+            System.out.println("Can't add: lightsaber already attached to someone");
+        }
+        else {
+            v.get(i).setLightsaber(l);
+            map.put(l, v.get(i));
+        }
+    }
+    public void replaceOwner(Lightsaber l, JediSith js) {
+        if(!map.containsKey(l))
+            System.out.println("Can't replace: lightsaber isn't mapped to a jedi/sith");
+        else
+            map.replace(l, js);
     }
 
     //delete

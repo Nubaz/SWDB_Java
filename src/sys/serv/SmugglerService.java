@@ -7,10 +7,12 @@ import weapons.Blaster;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.function.Predicate;
 
 public class SmugglerService {
     ArrayList<Smuggler> v = new ArrayList<>();
+    HashMap<Blaster, Smuggler> map = new HashMap<>();
 
     //create
     public void addS(Smuggler s) {
@@ -67,9 +69,28 @@ public class SmugglerService {
                 .forEach(System.out::println);
     }
 
+    public void listMap() {
+        map.forEach((b, s) -> System.out.println(
+                s.getName() + "\n" +
+                        "Blaster: " + b.getName() + ", " + b.getType() + ", " + b.getShots() + ", " + b.getCooldown()
+        ));
+    }
+
     //update
     public void addBlaster(int i, Blaster b) {
-        v.get(i).setWeapon(b);
+        if(map.containsKey(b)) {
+            System.out.println("Can't add: blaster already attached to someone");
+        }
+        else {
+            v.get(i).setWeapon(b);
+            map.put(b, v.get(i));
+        }
+    }
+    public void replaceOwner(Blaster b, Smuggler s) {
+        if(!map.containsKey(b))
+            System.out.println("Can't replace: blaster isn't mapped to a smuggler");
+        else
+            map.replace(b, s);
     }
 
     //delete

@@ -2,8 +2,6 @@ package misc;
 
 import enums.StarWarsEra;
 
-import java.util.Locale;
-
 public class SWDate {
     private Integer year;
     private StarWarsEra era;
