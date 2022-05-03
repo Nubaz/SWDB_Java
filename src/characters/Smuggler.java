@@ -81,12 +81,12 @@ public class Smuggler extends Character {
             return super.toString() + "\n" +
                     "Shipments delivered: " + shipments_nr + "\n" +
                     "Parsecs travelled: " + parsecs_travelled + "\n" +
-                    "Bounty: " + bounty + " credits";
+                    "Bounty: " + bounty + " credits" + "\n";
         else
             return super.toString() + "\n" +
                     "Shipments delivered: " + shipments_nr + "\n" +
                     "Parsecs travelled: " + parsecs_travelled + "\n" +
                     weapon + "\n" +
-                    "Bounty: " + bounty + " credits";
+                    "Bounty: " + bounty + " credits" + "\n";
     }
 }

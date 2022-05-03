@@ -44,6 +44,6 @@ public class Lightsaber {
     public String toString() {
         return "Lightsaber color: " + color + "\n" +
                 "Lightsaber type: " + type + "\n" +
-                "Lightsaber hilt: " + hilt;
+                "Lightsaber hilt: " + hilt + "\n";
     }
 }

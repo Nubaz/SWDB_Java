@@ -55,6 +55,6 @@ public class Blaster {
         return "Blaster name: " + name + "\n" +
                 "Blaster type: " + type + "\n" +
                 "Shots until overheating: " + shots + "\n" +
-                "Cooldown time: " + cooldown + "s";
+                "Cooldown time: " + cooldown + "s" + "\n";
     }
 }

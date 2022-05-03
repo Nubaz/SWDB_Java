@@ -56,6 +56,6 @@ public class ForceUser extends Character {
     public String toString() {
         return super.toString() + "\n" +
                 "Years of practice: " + yrs_practice + "\n" +
-                "Can live in the Force after death: " + permadeath;
+                "Can live in the Force after death: " + !permadeath + "\n";
     }
 }
