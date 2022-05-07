@@ -1,7 +1,10 @@
 package characters;
 
 import enums.StarWarsEra;
+import sys.logs.Log;
 import weapons.Blaster;
+
+import java.io.IOException;
 
 public class Smuggler extends Character {
     private Integer shipments_nr;
@@ -22,29 +25,19 @@ public class Smuggler extends Character {
         calculateBounty();
     }
 
-    public Smuggler(String name, String planet, Integer year, StarWarsEra era, Integer shipments_nr,
-                    Integer parsecs_travelled, Blaster weapon) {
-        super(name, planet, year, era);
-        occupation = "Smuggler";
-        this.shipments_nr = shipments_nr;
-        this.parsecs_travelled = parsecs_travelled;
-        this.weapon = weapon;
-
-        calculateBounty();
-    }
-
     //bounty calculator
     @Override
     protected void calculateBounty() {
         this.bounty = (double) shipments_nr * 0.5 * parsecs_travelled * credits;
     }
     @Override
-    public void showBountyCalculation() {
+    public void showBountyCalculation() throws IOException {
+        Log.log("Showing bounty calculation for " + this.getClass() + ":" + this.getName());
         System.out.println(
                 "Bounty calculation:\n" +
                 "Shipments delivered: " + shipments_nr + "\n" +
                 "Parsecs travelled: " + parsecs_travelled + "\n" +
-                "Bounty = " + shipments_nr + " * 0.5 * " + parsecs_travelled + " * " + credits + " = " + bounty
+                "Bounty = " + shipments_nr + " * 0.5 * " + parsecs_travelled + " * " + credits + " = " + String.format("%,.2f",bounty)
         );
     }
 
@@ -81,12 +74,12 @@ public class Smuggler extends Character {
             return super.toString() + "\n" +
                     "Shipments delivered: " + shipments_nr + "\n" +
                     "Parsecs travelled: " + parsecs_travelled + "\n" +
-                    "Bounty: " + bounty + " credits" + "\n";
+                    "Bounty: " + String.format("%,.2f",bounty) + " credits" + "\n";
         else
             return super.toString() + "\n" +
                     "Shipments delivered: " + shipments_nr + "\n" +
                     "Parsecs travelled: " + parsecs_travelled + "\n" +
                     weapon + "\n" +
-                    "Bounty: " + bounty + " credits" + "\n";
+                    "Bounty: " + String.format("%,.2f",bounty) + " credits" + "\n";
     }
 }

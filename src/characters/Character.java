@@ -2,6 +2,8 @@ package characters;
 import enums.StarWarsEra;
 import misc.SWDate;
 
+import java.io.IOException;
+
 public abstract class Character {
     protected String name;
     protected String planet;
@@ -26,7 +28,7 @@ public abstract class Character {
 
     //bounty calculator
     protected abstract void calculateBounty();
-    public abstract void showBountyCalculation();
+    public abstract void showBountyCalculation() throws IOException;
 
     //getters and setters
     public String getName() {

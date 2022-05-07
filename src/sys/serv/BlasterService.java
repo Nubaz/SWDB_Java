@@ -17,6 +17,10 @@ public class BlasterService {
     }
 
     //read
+    public Blaster getB(int i) {
+        return v.get(i);
+    }
+
     public void listB() throws IOException {
         Log.log("Listing blasters");
         v.forEach(System.out::println);

@@ -4,8 +4,10 @@ import enums.JediSithRank;
 import enums.StarWarsEra;
 import enums.ForceUserType;
 import misc.BadRankExp;
+import sys.logs.Log;
 import weapons.Lightsaber;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,17 +26,6 @@ public class JediSith extends ForceUser {
         this.type = type;
         this.rank = rank;
         verifyRank();
-
-        calculateBounty2();
-    }
-
-    public JediSith(String name, String planet, Integer year, StarWarsEra era, Integer yrs_practice, boolean permadeath,
-                    ForceUserType type, JediSithRank rank, Lightsaber lightsaber) throws BadRankExp {
-        super(name, planet, year, era, yrs_practice, permadeath);
-        this.type = type;
-        this.rank = rank;
-        verifyRank();
-        this.lightsaber = lightsaber;
 
         calculateBounty2();
     }
@@ -65,14 +56,15 @@ public class JediSith extends ForceUser {
     }
 
     @Override
-    public void showBountyCalculation() {
+    public void showBountyCalculation() throws IOException {
+        Log.log("Showing bounty calculation for " + this.getClass() + ":" + this.getName());
         System.out.println("Bounty calculation:\n" +
                 "Years of practice: " + yrs_practice + "\n" +
                 "Type factor: " + type.name() + ", " + type.factor + "\n" +
                 "Rank factor: " + rank.name + ", " + rank.factor + "\n" +
                 "Credits: " + credits + "\n" +
                 "Bounty = " + yrs_practice + " * " + type.factor + " * " + rank.factor + " * " +
-                credits + " = " + bounty);
+                credits + " = " + String.format("%,.2f",bounty));
     }
 
     //getters and setters
@@ -107,12 +99,12 @@ public class JediSith extends ForceUser {
             return super.toString() + "\n" +
                     "Type: " + type + "\n" +
                     "Rank: " + rank.name + "\n" +
-                    "Bounty: " + bounty + " credits" + "\n";
+                    "Bounty: " + String.format("%,.2f",bounty) + " credits" + "\n";
         else
             return super.toString() + "\n" +
                     "Type: " + type + "\n" +
                     "Rank: " + rank.name + "\n" +
                     lightsaber + "\n" +
-                    "Bounty: " + bounty + " credits" + "\n";
+                    "Bounty: " + String.format("%,.2f",bounty) + " credits" + "\n";
     }
 }

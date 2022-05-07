@@ -1,9 +1,6 @@
 package sys.logs;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Timestamp;
 
 public class Log {
@@ -43,5 +40,11 @@ public class Log {
         ts = new Timestamp(System.currentTimeMillis());
         bw.write(msg + "," + ts + ",");
         bw.newLine();
+    }
+
+    public static void clearLog() throws IOException {
+        fw = new FileWriter(f, false);
+        bw = new BufferedWriter(fw);
+        bw.write("");
     }
 }

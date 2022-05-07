@@ -1,6 +1,9 @@
 package characters;
 
 import enums.StarWarsEra;
+import sys.logs.Log;
+
+import java.io.IOException;
 
 public class ForceUser extends Character {
     protected Integer yrs_practice;
@@ -27,11 +30,12 @@ public class ForceUser extends Character {
         this.bounty = (double) (yrs_practice * credits);
     }
     @Override
-    public void showBountyCalculation() {
+    public void showBountyCalculation() throws IOException {
+        Log.log("Showing bounty calculation for " + this.getClass() + ":" + this.getName());
         System.out.println("Bounty calculation:\n" +
                 "Years of practice: " + yrs_practice + "\n" +
                 "Credits: " + credits + "\n" +
-                "Bounty = " + yrs_practice + " * " + credits + " = " + bounty);
+                "Bounty = " + yrs_practice + " * " + credits + " = " + String.format("%,.2f",bounty));
     }
 
     //getters and setters

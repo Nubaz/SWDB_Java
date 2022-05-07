@@ -23,6 +23,10 @@ public class BountyHunterService {
     }
 
     //read
+    public BountyHunter getBH(int i) {
+        return v.get(i);
+    }
+
     public void listBH() throws IOException {
         Log.log("Listing bounty hunters");
         v.forEach(System.out::println);
@@ -89,21 +93,22 @@ public class BountyHunterService {
 
     //update
     public void addBlaster(int i, Blaster b) throws IOException {
-        Log.log("Adding blaster " + b.getName() + " to pos " + i);
         if(map.containsKey(b)) {
-            System.out.println("Can't add: blaster already attached to someone");
+            Log.log("Can't add: blaster already attached to someone");
         }
         else {
+            Log.log("Adding blaster " + b.getName() + " to bounty hunter " + i);
             v.get(i).setWeapon(b);
             map.put(b, v.get(i));
         }
     }
     public void replaceOwner(Blaster b, BountyHunter bh) throws IOException {
-        Log.log("Changing owner of blaster " + b.getName() + " to " + bh.getName());
         if(!map.containsKey(b))
-            System.out.println("Can't replace: blaster isn't mapped to a bounty hunter");
-        else
+            Log.log("Can't replace: blaster isn't mapped to a bounty hunter");
+        else {
+            Log.log("Changing owner of blaster " + b.getName() + " to " + bh.getName());
             map.replace(b, bh);
+        }
     }
 
     //delete
@@ -117,12 +122,12 @@ public class BountyHunterService {
         v.removeIf(filter);
     }
     public void removeBH_planet(String planet) throws IOException {
-        Log.log("Removing bounty hunter born on " + planet);
+        Log.log("Removing bounty hunters born on " + planet);
         Predicate<BountyHunter> filter = (BountyHunter b) -> (b.getPlanet().equalsIgnoreCase(planet));
         v.removeIf(filter);
     }
     public void removeBH_era(StarWarsEra era) throws IOException {
-        Log.log("Removing bounty hunter born " + era);
+        Log.log("Removing bounty hunters born " + era);
         Predicate<BountyHunter> filter = (BountyHunter b) -> (b.getBorn().getEra().equals(era));
         v.removeIf(filter);
     }
