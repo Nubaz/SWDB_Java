@@ -117,12 +117,13 @@ public class Read {
     }
 
     protected static void loadFiles(Service s) throws IOException, BadRankExp {
-        Log.log("Loading blasters"); blasters(s);
-        Log.log("Loading lightsabers"); lightsabers(s);
+        Log.log("Loading objects from .csv files...");
+        blasters(s);
+        lightsabers(s);
 
-        Log.log("Loading bounty hunters"); bhunters(s);
-        Log.log("Loading force users"); forceusers(s);
-        Log.log("Loading jedi/siths"); jedisiths(s);
-        Log.log("Loading smugglers"); smugglers(s);
+        bhunters(s);
+        forceusers(s);
+        jedisiths(s);
+        smugglers(s);
     }
 }
