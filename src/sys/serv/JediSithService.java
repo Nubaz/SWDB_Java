@@ -4,6 +4,7 @@ import characters.Character;
 import characters.ForceUser;
 import characters.JediSith;
 import enums.StarWarsEra;
+import sys.csv.WriteCsv;
 import sys.logs.Log;
 import weapons.Lightsaber;
 
@@ -16,10 +17,14 @@ import java.util.function.Predicate;
 public class JediSithService {
     ArrayList<JediSith> v = new ArrayList<>();
     HashMap<Lightsaber, JediSith> map = new HashMap<>();
+    WriteCsv wcsv = WriteCsv.getInstance();
 
     //create
-    public void addJS(JediSith js) throws IOException {
+    public void addJS(JediSith js, boolean read) throws IOException {
         Log.log("Adding jedi/sith: " + js.getName());
+        if(!read) {
+            wcsv.jedisith(js);
+        }
         v.add(js);
     }
 
@@ -51,7 +56,7 @@ public class JediSithService {
                     //same era, return year
                     if(p1.getBorn().getEra().name().equals(p2.getBorn().getEra().name()))
                         //BBY, greater means older
-                        if(p1.getBorn().getEra().name().equals(StarWarsEra.BBY))
+                        if(p1.getBorn().getEra().name().equals(StarWarsEra.BBY.toString()))
                             return p1.getBorn().getYear().compareTo(p2.getBorn().getYear());
                         //ABY, greater means younger
                         else

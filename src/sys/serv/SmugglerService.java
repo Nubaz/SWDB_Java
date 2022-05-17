@@ -3,6 +3,7 @@ package sys.serv;
 import characters.Character;
 import characters.Smuggler;
 import enums.StarWarsEra;
+import sys.csv.WriteCsv;
 import sys.logs.Log;
 import weapons.Blaster;
 
@@ -15,10 +16,14 @@ import java.util.function.Predicate;
 public class SmugglerService {
     ArrayList<Smuggler> v = new ArrayList<>();
     HashMap<Blaster, Smuggler> map = new HashMap<>();
+    WriteCsv wcsv = WriteCsv.getInstance();
 
     //create
-    public void addS(Smuggler s) throws IOException {
+    public void addS(Smuggler s, boolean read) throws IOException {
         Log.log("Adding smuggler: " + s.getName());
+        if(!read) {
+            wcsv.smuggler(s);
+        }
         v.add(s);
     }
 
@@ -50,7 +55,7 @@ public class SmugglerService {
                     //same era, return year
                     if(p1.getBorn().getEra().name().equals(p2.getBorn().getEra().name()))
                         //BBY, greater means older
-                        if(p1.getBorn().getEra().name().equals(StarWarsEra.BBY))
+                        if(p1.getBorn().getEra().name().equals(StarWarsEra.BBY.toString()))
                             return p1.getBorn().getYear().compareTo(p2.getBorn().getYear());
                         //ABY, greater means younger
                         else

@@ -3,6 +3,7 @@ package sys.serv;
 import characters.BountyHunter;
 import characters.Character;
 import enums.StarWarsEra;
+import sys.csv.WriteCsv;
 import sys.logs.Log;
 import weapons.Blaster;
 
@@ -15,10 +16,13 @@ import java.util.function.Predicate;
 public class BountyHunterService {
     ArrayList<BountyHunter> v = new ArrayList<>();
     HashMap<Blaster, BountyHunter> map = new HashMap<>();
+    WriteCsv wcsv = WriteCsv.getInstance();
 
     //create
-    public void addBH(BountyHunter b) throws IOException {
+    public void addBH(BountyHunter b, boolean read) throws IOException {
         Log.log("Adding bounty hunter: " + b.getName());
+        if(!read)
+            wcsv.bhunter(b);
         v.add(b);
     }
 
@@ -50,7 +54,7 @@ public class BountyHunterService {
                     //same era, return year
                     if(p1.getBorn().getEra().name().equals(p2.getBorn().getEra().name()))
                         //BBY, greater means older
-                        if(p1.getBorn().getEra().name().equals(StarWarsEra.BBY))
+                        if(p1.getBorn().getEra().name().equals(StarWarsEra.BBY.toString()))
                             return p1.getBorn().getYear().compareTo(p2.getBorn().getYear());
                         //ABY, greater means younger
                         else

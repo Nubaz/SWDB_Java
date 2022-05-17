@@ -1,5 +1,6 @@
 package sys.serv;
 
+import sys.csv.WriteCsv;
 import sys.logs.Log;
 import weapons.Lightsaber;
 
@@ -9,10 +10,13 @@ import java.util.function.Predicate;
 
 public class LightsaberService {
     ArrayList<Lightsaber> v = new ArrayList<>();
+    WriteCsv wcsv = WriteCsv.getInstance();
 
     //create
-    public void addL(Lightsaber l) throws IOException {
+    public void addL(Lightsaber l, boolean read) throws IOException {
         Log.log("Adding lightsaber: " + l.getHilt() + "-" + l.getColor() + "-" + l.getType());
+        if(!read)
+            wcsv.lightsaber(l);
         v.add(l);
     }
 

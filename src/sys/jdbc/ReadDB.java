@@ -1,4 +1,4 @@
-package sys;
+package sys.jdbc;
 
 import characters.BountyHunter;
 import characters.ForceUser;
@@ -8,40 +8,27 @@ import enums.ForceUserType;
 import enums.JediSithRank;
 import enums.StarWarsEra;
 import misc.BadRankExp;
+import sys.Service;
+import sys.csv.ReadCsv;
 import weapons.Blaster;
 import weapons.Lightsaber;
 
 import java.io.IOException;
 import java.sql.*;
 
-public class JDBC {
-    static Connection conn = null;
+public class ReadDB {
+    private static ReadDB rdb = null;
 
-    public static Connection getConn() throws SQLException, ClassNotFoundException {
-        if(conn == null)
-            startConn();
-        return conn;
+    private ReadDB() {
     }
 
-    public static void startConn() throws ClassNotFoundException, SQLException {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            String url = "jdbc:mysql://localhost:3306/swdb_java";
-            String user = "root";
-            String pass = "antiguas";
-
-            conn = DriverManager.getConnection(url, user, pass);
+    public static ReadDB getInstance() {
+        if(rdb == null)
+            rdb = new ReadDB();
+        return rdb;
     }
 
-    public static void closeConn() {
-        try {
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void loadB(Service s, Statement stmt) {
+    private void loadB(Service s, Statement stmt) {
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM blaster");
             while(rs.next()) {
@@ -51,15 +38,14 @@ public class JDBC {
                                 rs.getString("BType"),
                                 rs.getInt("Shots"),
                                 rs.getDouble("Cooldown")
-                        )
+                        ), true
                 );
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
-
-    private static void loadL(Service s, Statement stmt) {
+    private void loadL(Service s, Statement stmt) {
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM lightsaber");
             while(rs.next()) {
@@ -68,15 +54,14 @@ public class JDBC {
                                 rs.getString("Color"),
                                 rs.getString("LType"),
                                 rs.getString("Hilt")
-                        )
+                        ), true
                 );
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
-
-    private static void loadBH(Service s, Statement stmt) {
+    private void loadBH(Service s, Statement stmt) {
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM bountyhunter");
             while(rs.next()) {
@@ -88,15 +73,14 @@ public class JDBC {
                                 StarWarsEra.valueOf(rs.getString("Born_Era")),
                                 rs.getInt("Contracts_done"),
                                 rs.getInt("Min_credits_contract")
-                        )
+                        ), true
                 );
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
-
-    private static void loadFU(Service s, Statement stmt) {
+    private void loadFU(Service s, Statement stmt) {
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM forceuser");
             while(rs.next()) {
@@ -108,15 +92,14 @@ public class JDBC {
                                 StarWarsEra.valueOf(rs.getString("Born_Era")),
                                 rs.getInt("Yrs_practice"),
                                 rs.getBoolean("Permadeath")
-                        )
+                        ), true
                 );
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
-
-    private static void loadJS(Service s, Statement stmt) {
+    private void loadJS(Service s, Statement stmt) {
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM jedisith");
             while(rs.next()) {
@@ -130,15 +113,14 @@ public class JDBC {
                                 rs.getBoolean("Permadeath"),
                                 ForceUserType.valueOf(rs.getString("JSType")),
                                 JediSithRank.valueOf(rs.getString("JSRank"))
-                        )
+                        ), true
                 );
             }
         } catch (SQLException | IOException | BadRankExp e) {
             e.printStackTrace();
         }
     }
-
-    private static void loadS(Service s, Statement stmt) {
+    private void loadS(Service s, Statement stmt) {
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM smuggler");
             while(rs.next()) {
@@ -150,7 +132,7 @@ public class JDBC {
                                 StarWarsEra.valueOf(rs.getString("Born_Era")),
                                 rs.getInt("Shipments_nr"),
                                 rs.getInt("Parsecs_travelled")
-                        )
+                        ), true
                 );
             }
         } catch (SQLException | IOException e) {
@@ -158,9 +140,9 @@ public class JDBC {
         }
     }
 
-    public static void loadObjects(Service s) {
+    public void loadObjects(Service s) {
         try {
-            Statement stmt = conn.createStatement();
+            Statement stmt = DBConn.conn.createStatement();
 
             loadB(s, stmt);
             loadL(s, stmt);

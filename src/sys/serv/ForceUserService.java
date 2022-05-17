@@ -3,6 +3,7 @@ package sys.serv;
 import characters.Character;
 import characters.ForceUser;
 import enums.StarWarsEra;
+import sys.csv.WriteCsv;
 import sys.logs.Log;
 
 import java.io.IOException;
@@ -12,10 +13,13 @@ import java.util.function.Predicate;
 
 public class ForceUserService {
     ArrayList<ForceUser> v = new ArrayList<>();
+    WriteCsv wcsv = WriteCsv.getInstance();
 
     //create
-    public void addFU(ForceUser f) throws IOException {
+    public void addFU(ForceUser f, boolean read) throws IOException {
         Log.log("Adding force user: " + f.getName());
+        if(!read)
+            wcsv.forceuser(f);
         v.add(f);
     }
 
@@ -47,7 +51,7 @@ public class ForceUserService {
                     //same era, return year
                     if(p1.getBorn().getEra().name().equals(p2.getBorn().getEra().name()))
                         //BBY, greater means older
-                        if(p1.getBorn().getEra().name().equals(StarWarsEra.BBY))
+                        if(p1.getBorn().getEra().name().equals(StarWarsEra.BBY.toString()))
                             return p1.getBorn().getYear().compareTo(p2.getBorn().getYear());
                         //ABY, greater means younger
                         else
