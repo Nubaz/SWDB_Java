@@ -4,6 +4,7 @@ import characters.Character;
 import characters.ForceUser;
 import enums.StarWarsEra;
 import sys.csv.WriteCsv;
+import sys.jdbc.WriteDB;
 import sys.logs.Log;
 
 import java.io.IOException;
@@ -14,12 +15,15 @@ import java.util.function.Predicate;
 public class ForceUserService {
     ArrayList<ForceUser> v = new ArrayList<>();
     WriteCsv wcsv = WriteCsv.getInstance();
+    WriteDB wdb = WriteDB.getInstance();
 
     //create
     public void addFU(ForceUser f, boolean read) throws IOException {
         Log.log("Adding force user: " + f.getName());
-        if(!read)
+        if(!read) {
+            wdb.forceuser(f);
             wcsv.forceuser(f);
+        }
         v.add(f);
     }
 

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBConn {
     private static DBConn db_conn = null;
-    static Connection conn = null;
+    private Connection conn = null;
 
     private DBConn() {
     }
@@ -29,7 +29,11 @@ public class DBConn {
         }
     }
 
-    public static void closeConn() {
+    public Connection getConn() {
+        return conn;
+    }
+
+    public void closeConn() {
         try {
             conn.close();
         } catch (SQLException e) {

@@ -128,5 +128,6 @@ public class ReadCsv {
         forceusers(s);
         jedisiths(s);
         smugglers(s);
+        Log.log("Done loading!");
     }
 }

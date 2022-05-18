@@ -4,6 +4,7 @@ import characters.Character;
 import characters.Smuggler;
 import enums.StarWarsEra;
 import sys.csv.WriteCsv;
+import sys.jdbc.WriteDB;
 import sys.logs.Log;
 import weapons.Blaster;
 
@@ -17,11 +18,13 @@ public class SmugglerService {
     ArrayList<Smuggler> v = new ArrayList<>();
     HashMap<Blaster, Smuggler> map = new HashMap<>();
     WriteCsv wcsv = WriteCsv.getInstance();
+    WriteDB wdb = WriteDB.getInstance();
 
     //create
     public void addS(Smuggler s, boolean read) throws IOException {
         Log.log("Adding smuggler: " + s.getName());
         if(!read) {
+            wdb.smuggler(s);
             wcsv.smuggler(s);
         }
         v.add(s);

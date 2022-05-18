@@ -10,6 +10,7 @@ import enums.StarWarsEra;
 import misc.BadRankExp;
 import sys.Service;
 import sys.csv.ReadCsv;
+import sys.logs.Log;
 import weapons.Blaster;
 import weapons.Lightsaber;
 
@@ -142,7 +143,9 @@ public class ReadDB {
 
     public void loadObjects(Service s) {
         try {
-            Statement stmt = DBConn.conn.createStatement();
+            Log.log("Loading objects from MySQL database...");
+            DBConn dbconn = DBConn.getInstance();
+            Statement stmt = dbconn.getConn().createStatement();
 
             loadB(s, stmt);
             loadL(s, stmt);
@@ -150,7 +153,8 @@ public class ReadDB {
             loadFU(s, stmt);
             loadJS(s, stmt);
             loadS(s, stmt);
-        } catch (SQLException e) {
+            Log.log("Done loading!");
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }

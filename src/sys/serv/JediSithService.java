@@ -5,6 +5,7 @@ import characters.ForceUser;
 import characters.JediSith;
 import enums.StarWarsEra;
 import sys.csv.WriteCsv;
+import sys.jdbc.WriteDB;
 import sys.logs.Log;
 import weapons.Lightsaber;
 
@@ -18,11 +19,13 @@ public class JediSithService {
     ArrayList<JediSith> v = new ArrayList<>();
     HashMap<Lightsaber, JediSith> map = new HashMap<>();
     WriteCsv wcsv = WriteCsv.getInstance();
+    WriteDB wdb = WriteDB.getInstance();
 
     //create
     public void addJS(JediSith js, boolean read) throws IOException {
         Log.log("Adding jedi/sith: " + js.getName());
         if(!read) {
+            wdb.jedisith(js);
             wcsv.jedisith(js);
         }
         v.add(js);

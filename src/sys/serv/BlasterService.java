@@ -1,6 +1,7 @@
 package sys.serv;
 
 import sys.csv.WriteCsv;
+import sys.jdbc.WriteDB;
 import sys.logs.Log;
 import weapons.Blaster;
 
@@ -11,11 +12,13 @@ import java.util.function.Predicate;
 public class BlasterService {
     ArrayList<Blaster> v = new ArrayList<>();
     WriteCsv wcsv = WriteCsv.getInstance();
+    WriteDB wdb = WriteDB.getInstance();
 
     //create
     public void addB(Blaster b, boolean read) throws IOException {
         Log.log("Adding blaster: " + b.getName());
         if(!read) {
+            wdb.blaster(b);
             wcsv.blaster(b);
         }
         v.add(b);

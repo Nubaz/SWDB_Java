@@ -4,6 +4,7 @@ import characters.BountyHunter;
 import characters.Character;
 import enums.StarWarsEra;
 import sys.csv.WriteCsv;
+import sys.jdbc.WriteDB;
 import sys.logs.Log;
 import weapons.Blaster;
 
@@ -17,12 +18,15 @@ public class BountyHunterService {
     ArrayList<BountyHunter> v = new ArrayList<>();
     HashMap<Blaster, BountyHunter> map = new HashMap<>();
     WriteCsv wcsv = WriteCsv.getInstance();
+    WriteDB wdb = WriteDB.getInstance();
 
     //create
     public void addBH(BountyHunter b, boolean read) throws IOException {
         Log.log("Adding bounty hunter: " + b.getName());
-        if(!read)
+        if(!read) {
+            wdb.bhunter(b);
             wcsv.bhunter(b);
+        }
         v.add(b);
     }
 
