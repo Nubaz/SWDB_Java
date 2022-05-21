@@ -1,6 +1,7 @@
 package characters;
 
 import enums.StarWarsEra;
+import sys.jdbc.UpdateDB;
 import sys.logs.Log;
 
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.io.IOException;
 public class ForceUser extends Character {
     protected Integer yrs_practice;
     protected boolean permadeath;
+    private final UpdateDB udb = UpdateDB.getInstance();
 
     //basic constructors
     public ForceUser() {
@@ -41,7 +43,13 @@ public class ForceUser extends Character {
     }
 
     //getters and setters
-    public void setYrs_practice(Integer yrs_practice) {
+    public void setYrs_practice(Integer yrs_practice) throws IOException {
+        Log l = Log.getInstance();
+
+        l.log("Updating force user " + this.getName() + " from " +
+                this.getYrs_practice() + " years of practice to " +
+                yrs_practice + " years of practice");
+        udb.update("forceuser","Yrs_practice",yrs_practice.toString(),this.getName());
         this.yrs_practice = yrs_practice;
         calculateBounty();
     }
@@ -54,7 +62,13 @@ public class ForceUser extends Character {
         return permadeath;
     }
 
-    public void setPermadeath(boolean permadeath) {
+    public void setPermadeath(Boolean permadeath) throws IOException {
+        Log l = Log.getInstance();
+
+        l.log("Updating force user " + this.getName() + " from " +
+                this.isPermadeath() + " permadeath to " +
+                permadeath + " permadeath");
+        udb.update("forceuser","Permadeath",permadeath.toString(),this.getName());
         this.permadeath = permadeath;
     }
 

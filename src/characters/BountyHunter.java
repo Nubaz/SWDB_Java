@@ -1,6 +1,7 @@
 package characters;
 
 import enums.StarWarsEra;
+import sys.jdbc.UpdateDB;
 import sys.logs.Log;
 import weapons.Blaster;
 
@@ -10,6 +11,7 @@ public class BountyHunter extends Character {
     private Integer contracts_done;
     private Integer min_credits_contract;
     private Blaster weapon;
+    private final UpdateDB udb = UpdateDB.getInstance();
 
     //basic constructors
     public BountyHunter() {
@@ -45,7 +47,13 @@ public class BountyHunter extends Character {
         return contracts_done;
     }
 
-    public void setContracts_done(Integer contracts_done) {
+    public void setContracts_done(Integer contracts_done) throws IOException {
+        Log l = Log.getInstance();
+
+        l.log("Updating bounty hunter " + this.getName() + " from " +
+                this.getContracts_done() + " contracts done to " +
+                contracts_done + " contracts done");
+        udb.update("bountyhunter","Contracts_done",contracts_done.toString(),this.getName());
         this.contracts_done = contracts_done;
     }
 
@@ -53,7 +61,13 @@ public class BountyHunter extends Character {
         return min_credits_contract;
     }
 
-    public void setMin_credits_contract(Integer min_credits_contract) {
+    public void setMin_credits_contract(Integer min_credits_contract) throws IOException {
+        Log l = Log.getInstance();
+
+        l.log("Updating bounty hunter " + this.getName() + " from " +
+                this.getMin_credits_contract() + " min credits per contract to " +
+                min_credits_contract + " min credits per contract");
+        udb.update("bountyhunter","Min_credits_contract",min_credits_contract.toString(),this.getName());
         this.min_credits_contract = min_credits_contract;
     }
 

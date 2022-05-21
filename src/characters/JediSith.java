@@ -4,6 +4,7 @@ import enums.JediSithRank;
 import enums.StarWarsEra;
 import enums.ForceUserType;
 import misc.BadRankExp;
+import sys.jdbc.UpdateDB;
 import sys.logs.Log;
 import weapons.Lightsaber;
 
@@ -15,6 +16,7 @@ public class JediSith extends ForceUser {
     private ForceUserType type;
     private JediSithRank rank;
     private Lightsaber lightsaber;
+    private final UpdateDB udb = UpdateDB.getInstance();
 
     //basic constructors
     public JediSith() {
@@ -74,7 +76,13 @@ public class JediSith extends ForceUser {
         return type;
     }
 
-    public void setType(ForceUserType type) {
+    public void setType(ForceUserType type) throws IOException {
+        Log l = Log.getInstance();
+
+        l.log("Updating jedi/sith " + this.getName() + " from " +
+                this.getType() + " to " + type.name());
+        udb.update("jedisith","JSType",
+                "\"" + type + "\"",this.getName());
         this.type = type;
     }
 
@@ -82,7 +90,13 @@ public class JediSith extends ForceUser {
         return rank;
     }
 
-    public void setRank(JediSithRank rank) {
+    public void setRank(JediSithRank rank) throws IOException {
+        Log l = Log.getInstance();
+
+        l.log("Updating jedi/sith " + this.getName() + " from " +
+                this.getRank().name + " to " + rank.name);
+        udb.update("jedisith","JSRank",
+                "\"" + rank + "\"",this.getName());
         this.rank = rank;
         calculateBounty();
     }

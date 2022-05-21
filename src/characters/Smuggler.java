@@ -1,6 +1,7 @@
 package characters;
 
 import enums.StarWarsEra;
+import sys.jdbc.UpdateDB;
 import sys.logs.Log;
 import weapons.Blaster;
 
@@ -10,6 +11,7 @@ public class Smuggler extends Character {
     private Integer shipments_nr;
     private Integer parsecs_travelled;
     private Blaster weapon;
+    private final UpdateDB udb = UpdateDB.getInstance();
 
     //basic constructors
     public Smuggler() {
@@ -48,7 +50,13 @@ public class Smuggler extends Character {
         return shipments_nr;
     }
 
-    public void setShipments_nr(Integer shipments_nr) {
+    public void setShipments_nr(Integer shipments_nr) throws IOException {
+        Log l = Log.getInstance();
+
+        l.log("Updating smuggler " + this.getName() + " from " +
+                this.getShipments_nr() + " shipments delivered to " +
+                shipments_nr + " shipments delivered");
+        udb.update("smuggler","Shipments_nr",shipments_nr.toString(),this.getName());
         this.shipments_nr = shipments_nr;
         calculateBounty();
     }
@@ -57,7 +65,13 @@ public class Smuggler extends Character {
         return parsecs_travelled;
     }
 
-    public void setParsecs_travelled(Integer parsecs_travelled) {
+    public void setParsecs_travelled(Integer parsecs_travelled) throws IOException {
+        Log l = Log.getInstance();
+
+        l.log("Updating smuggler " + this.getName() + " from " +
+                this.getParsecs_travelled() + " parsecs travelled to " +
+                parsecs_travelled + " parsecs travelled");
+        udb.update("smuggler","Parsecs_travelled",parsecs_travelled.toString(),this.getName());
         this.parsecs_travelled = parsecs_travelled;
         calculateBounty();
     }
