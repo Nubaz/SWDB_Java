@@ -73,6 +73,12 @@ public class Main {
         service.sserv.getS(0).setShipments_nr(777);
         service.sserv.getS(0).setParsecs_travelled(55555);
 
+        //delete testing
+        service.bhserv.removeBH_index(1);
+        service.fuserv.removeFU_index(1);
+        service.jsserv.removeJS_index(1);
+        service.sserv.removeS_index(1);
+
         if(flag) dbcon.closeConn();
 
         l.log("System shutdown");

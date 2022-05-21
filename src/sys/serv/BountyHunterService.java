@@ -4,6 +4,7 @@ import characters.BountyHunter;
 import characters.Character;
 import enums.StarWarsEra;
 import sys.csv.WriteCsv;
+import sys.jdbc.DeleteDB;
 import sys.jdbc.WriteDB;
 import sys.logs.Log;
 import weapons.Blaster;
@@ -19,6 +20,7 @@ public class BountyHunterService {
     HashMap<Blaster, BountyHunter> map = new HashMap<>();
     WriteCsv wcsv = WriteCsv.getInstance();
     WriteDB wdb = WriteDB.getInstance();
+    DeleteDB ddb = DeleteDB.getInstance();
     Log l;
 
     //create
@@ -144,6 +146,8 @@ public class BountyHunterService {
     public void removeBH_index(int i) throws IOException {
         l = Log.getInstance();
         l.log("Removing bounty hunter " + i);
+
+        ddb.delete("bountyhunter",v.get(i).getName());
         v.remove(i);
     }
     public void removeBH_name(String name) throws IOException {

@@ -5,6 +5,7 @@ import characters.ForceUser;
 import characters.JediSith;
 import enums.StarWarsEra;
 import sys.csv.WriteCsv;
+import sys.jdbc.DeleteDB;
 import sys.jdbc.WriteDB;
 import sys.logs.Log;
 import weapons.Lightsaber;
@@ -20,6 +21,7 @@ public class JediSithService {
     HashMap<Lightsaber, JediSith> map = new HashMap<>();
     WriteCsv wcsv = WriteCsv.getInstance();
     WriteDB wdb = WriteDB.getInstance();
+    DeleteDB ddb = DeleteDB.getInstance();
     Log l;
 
     //create
@@ -153,8 +155,9 @@ public class JediSithService {
     //delete
     public void removeJS_index(int i) throws IOException {
         l = Log.getInstance();
-
         l.log("Removing jedi/sith " + i);
+
+        ddb.delete("jedisith",v.get(i).getName());
         v.remove(i);
     }
     public void removeJS_name(String name) throws IOException {

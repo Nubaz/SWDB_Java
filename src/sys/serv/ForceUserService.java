@@ -4,6 +4,7 @@ import characters.Character;
 import characters.ForceUser;
 import enums.StarWarsEra;
 import sys.csv.WriteCsv;
+import sys.jdbc.DeleteDB;
 import sys.jdbc.WriteDB;
 import sys.logs.Log;
 
@@ -16,6 +17,7 @@ public class ForceUserService {
     ArrayList<ForceUser> v = new ArrayList<>();
     WriteCsv wcsv = WriteCsv.getInstance();
     WriteDB wdb = WriteDB.getInstance();
+    DeleteDB ddb = DeleteDB.getInstance();
     Log l;
 
     //create
@@ -100,8 +102,9 @@ public class ForceUserService {
     //delete
     public void removeFU_index(int i) throws IOException {
         l = Log.getInstance();
-
         l.log("Removing force user " + i);
+
+        ddb.delete("forceuser",v.get(i).getName());
         v.remove(i);
     }
     public void removeFU_name(String name) throws IOException {

@@ -4,6 +4,7 @@ import characters.Character;
 import characters.Smuggler;
 import enums.StarWarsEra;
 import sys.csv.WriteCsv;
+import sys.jdbc.DeleteDB;
 import sys.jdbc.WriteDB;
 import sys.logs.Log;
 import weapons.Blaster;
@@ -19,6 +20,7 @@ public class SmugglerService {
     HashMap<Blaster, Smuggler> map = new HashMap<>();
     WriteCsv wcsv = WriteCsv.getInstance();
     WriteDB wdb = WriteDB.getInstance();
+    DeleteDB ddb = DeleteDB.getInstance();
     Log l;
 
     //create
@@ -144,8 +146,9 @@ public class SmugglerService {
     //delete
     public void removeS_index(int i) throws IOException {
         l = Log.getInstance();
-
         l.log("Removing smuggler " + i);
+
+        ddb.delete("smuggler",v.get(i).getName());
         v.remove(i);
     }
     public void removeS_name(String name) throws IOException {
