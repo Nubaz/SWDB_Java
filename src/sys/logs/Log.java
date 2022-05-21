@@ -4,10 +4,10 @@ import java.io.*;
 import java.sql.Timestamp;
 
 public class Log {
-    static File f = new File("src/sys/logs/logs.csv");
-    static FileWriter fw;
+    File f = new File("src/sys/logs/logs.csv");
+    FileWriter fw;
 
-    static {
+    {
         try {
             fw = new FileWriter(f,true);
         } catch (IOException e) {
@@ -15,34 +15,36 @@ public class Log {
         }
     }
 
-    static BufferedWriter bw = new BufferedWriter(fw);
+    BufferedWriter bw = new BufferedWriter(fw);
 
-    static Timestamp ts;
+    Timestamp ts;
 
-    private static final Log l = null;
+    private static Log l = null;
 
-    public Log() throws IOException {
+    private Log() throws IOException {
         if(!f.exists()){
             f.getParentFile().mkdirs();
             f.createNewFile();
         }
     }
 
-    public static Log getInstance() {
+    public static Log getInstance() throws IOException {
+        if(l == null)
+            l = new Log();
         return l;
     }
 
-    public static BufferedWriter getBw() {
+    public BufferedWriter getBw() {
         return bw;
     }
 
-    public static void log(String msg) throws IOException {
+    public void log(String msg) throws IOException {
         ts = new Timestamp(System.currentTimeMillis());
         bw.write(msg + "," + ts + ",");
         bw.newLine();
     }
 
-    public static void clearLog() throws IOException {
+    public void clearLog() throws IOException {
         fw = new FileWriter(f, false);
         bw = new BufferedWriter(fw);
         bw.write("");

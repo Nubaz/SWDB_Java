@@ -32,7 +32,9 @@ public class Smuggler extends Character {
     }
     @Override
     public void showBountyCalculation() throws IOException {
-        Log.log("Showing bounty calculation for " + this.getClass() + ":" + this.getName());
+        Log l = Log.getInstance();
+
+        l.log("Showing bounty calculation for " + this.getClass() + ":" + this.getName());
         System.out.println(
                 "Bounty calculation:\n" +
                 "Shipments delivered: " + shipments_nr + "\n" +

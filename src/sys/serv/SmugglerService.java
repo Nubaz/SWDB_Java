@@ -19,10 +19,13 @@ public class SmugglerService {
     HashMap<Blaster, Smuggler> map = new HashMap<>();
     WriteCsv wcsv = WriteCsv.getInstance();
     WriteDB wdb = WriteDB.getInstance();
+    Log l;
 
     //create
     public void addS(Smuggler s, boolean read) throws IOException {
-        Log.log("Adding smuggler: " + s.getName());
+        l = Log.getInstance();
+
+        l.log("Adding smuggler: " + s.getName());
         if(!read) {
             wdb.smuggler(s);
             wcsv.smuggler(s);
@@ -36,23 +39,31 @@ public class SmugglerService {
     }
 
     public void listS() throws IOException {
-        Log.log("Listing smugglers");
+        l = Log.getInstance();
+
+        l.log("Listing smugglers");
         v.forEach(System.out::println);
     }
     public void listS_name() throws IOException {
-        Log.log("Listing smugglers by name");
+        l = Log.getInstance();
+
+        l.log("Listing smugglers by name");
         v.stream()
                 .sorted((p1,p2) -> p1.getName().compareToIgnoreCase(p2.getName()))
                 .forEach(System.out::println);
     }
     public void listS_planet() throws IOException {
-        Log.log("Listing smugglers by planet");
+        l = Log.getInstance();
+
+        l.log("Listing smugglers by planet");
         v.stream()
                 .sorted((p1,p2) -> p1.getPlanet().compareToIgnoreCase(p2.getPlanet()))
                 .forEach(System.out::println);
     }
     public void listS_born() throws IOException {
-        Log.log("Listing smugglers by date of birth");
+        l = Log.getInstance();
+
+        l.log("Listing smugglers by date of birth");
         v.stream()
                 .sorted((p1,p2) -> {
                     //same era, return year
@@ -73,26 +84,34 @@ public class SmugglerService {
                 .forEach(System.out::println);
     }
     public void listS_bounty() throws IOException {
-        Log.log("Listing smugglers by bounty");
+        l = Log.getInstance();
+
+        l.log("Listing smugglers by bounty");
         v.stream()
                 .sorted(Comparator.comparing(Character::getBounty))
                 .forEach(System.out::println);
     }
     public void listS_shipments_nr() throws IOException {
-        Log.log("Listing smugglers by nr. of shipments");
+        l = Log.getInstance();
+
+        l.log("Listing smugglers by nr. of shipments");
         v.stream()
                 .sorted(Comparator.comparing(Smuggler::getShipments_nr))
                 .forEach(System.out::println);
     }
     public void listS_parsecs() throws IOException {
-        Log.log("Listing smugglers by parsecs travelled");
+        l = Log.getInstance();
+
+        l.log("Listing smugglers by parsecs travelled");
         v.stream()
                 .sorted(Comparator.comparing(Smuggler::getParsecs_travelled))
                 .forEach(System.out::println);
     }
 
     public void listMap() throws IOException {
-        Log.log("Listing smugglers - blasters binding");
+        l = Log.getInstance();
+
+        l.log("Listing smugglers - blasters binding");
         map.forEach((b, s) -> System.out.println(
                 s.getName() + "\n" +
                         "Blaster: " + b.getName() + ", " + b.getType() + ", " + b.getShots() + ", " + b.getCooldown()
@@ -101,7 +120,9 @@ public class SmugglerService {
 
     //update
     public void addBlaster(int i, Blaster b) throws IOException {
-        Log.log("Adding blaster " + b.getName() + " to smuggler " + i);
+        l = Log.getInstance();
+
+        l.log("Adding blaster " + b.getName() + " to smuggler " + i);
         if(map.containsKey(b)) {
             System.out.println("Can't add: blaster already attached to someone");
         }
@@ -111,7 +132,9 @@ public class SmugglerService {
         }
     }
     public void replaceOwner(Blaster b, Smuggler s) throws IOException {
-        Log.log("Changing owner of blaster " + b.getName() + " to " + s.getName());
+        l = Log.getInstance();
+
+        l.log("Changing owner of blaster " + b.getName() + " to " + s.getName());
         if(!map.containsKey(b))
             System.out.println("Can't replace: blaster isn't mapped to a smuggler");
         else
@@ -120,21 +143,29 @@ public class SmugglerService {
 
     //delete
     public void removeS_index(int i) throws IOException {
-        Log.log("Removing smuggler " + i);
+        l = Log.getInstance();
+
+        l.log("Removing smuggler " + i);
         v.remove(i);
     }
     public void removeS_name(String name) throws IOException {
-        Log.log("Removing smuggler " + name);
+        l = Log.getInstance();
+
+        l.log("Removing smuggler " + name);
         Predicate<Smuggler> filter = (Smuggler b) -> (b.getName().equalsIgnoreCase(name));
         v.removeIf(filter);
     }
     public void removeS_planet(String planet) throws IOException {
-        Log.log("Removing smugglers born on " + planet);
+        l = Log.getInstance();
+
+        l.log("Removing smugglers born on " + planet);
         Predicate<Smuggler> filter = (Smuggler b) -> (b.getPlanet().equalsIgnoreCase(planet));
         v.removeIf(filter);
     }
     public void removeS_era(StarWarsEra era) throws IOException {
-        Log.log("Removing smugglers born " + era);
+        l = Log.getInstance();
+
+        l.log("Removing smugglers born " + era);
         Predicate<Smuggler> filter = (Smuggler b) -> (b.getBorn().getEra().equals(era));
         v.removeIf(filter);
     }

@@ -32,11 +32,13 @@ public class BountyHunter extends Character {
     }
     @Override
     public void showBountyCalculation() throws IOException {
-        Log.log("Showing bounty calculation for " + this.getClass() + ":" + this.getName());
+        Log l = Log.getInstance();
+
+        l.log("Showing bounty calculation for " + this.getClass() + ":" + this.getName());
         System.out.println("Bounty calculation:\n" +
                 "Contracts done: " + contracts_done + "\n" +
                 "Bounty = " + contracts_done + " * " + credits + " = " + String.format("%,.2f",bounty));
-    };
+    }
 
     //getters and setters
     public Integer getContracts_done() {

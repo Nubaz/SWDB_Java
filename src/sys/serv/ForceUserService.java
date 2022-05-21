@@ -16,10 +16,13 @@ public class ForceUserService {
     ArrayList<ForceUser> v = new ArrayList<>();
     WriteCsv wcsv = WriteCsv.getInstance();
     WriteDB wdb = WriteDB.getInstance();
+    Log l;
 
     //create
     public void addFU(ForceUser f, boolean read) throws IOException {
-        Log.log("Adding force user: " + f.getName());
+        l = Log.getInstance();
+
+        l.log("Adding force user: " + f.getName());
         if(!read) {
             wdb.forceuser(f);
             wcsv.forceuser(f);
@@ -33,23 +36,31 @@ public class ForceUserService {
     }
 
     public void listFU() throws IOException {
-        Log.log("Listing force users");
+        l = Log.getInstance();
+
+        l.log("Listing force users");
         v.forEach(System.out::println);
     }
     public void listFU_name() throws IOException {
-        Log.log("Listing force users by name");
+        l = Log.getInstance();
+
+        l.log("Listing force users by name");
         v.stream()
                 .sorted((p1,p2) -> p1.getName().compareToIgnoreCase(p2.getName()))
                 .forEach(System.out::println);
     }
     public void listFU_planet() throws IOException {
-        Log.log("Listing force users by planet");
+        l = Log.getInstance();
+
+        l.log("Listing force users by planet");
         v.stream()
                 .sorted((p1,p2) -> p1.getPlanet().compareToIgnoreCase(p2.getPlanet()))
                 .forEach(System.out::println);
     }
     public void listFU_born() throws IOException {
-        Log.log("Listing force users by date of birth");
+        l = Log.getInstance();
+
+        l.log("Listing force users by date of birth");
         v.stream()
                 .sorted((p1,p2) -> {
                     //same era, return year
@@ -70,13 +81,17 @@ public class ForceUserService {
                 .forEach(System.out::println);
     }
     public void listFU_bounty() throws IOException {
-        Log.log("Listing force users by bounty");
+        l = Log.getInstance();
+
+        l.log("Listing force users by bounty");
         v.stream()
                 .sorted(Comparator.comparing(Character::getBounty))
                 .forEach(System.out::println);
     }
     public void listFU_yrs_practice() throws IOException {
-        Log.log("Listing force users by years of practice");
+        l = Log.getInstance();
+
+        l.log("Listing force users by years of practice");
         v.stream()
                 .sorted(Comparator.comparing(ForceUser::getYrs_practice))
                 .forEach(System.out::println);
@@ -84,21 +99,29 @@ public class ForceUserService {
 
     //delete
     public void removeFU_index(int i) throws IOException {
-        Log.log("Removing force user " + i);
+        l = Log.getInstance();
+
+        l.log("Removing force user " + i);
         v.remove(i);
     }
     public void removeFU_name(String name) throws IOException {
-        Log.log("Removing force user " + name);
+        l = Log.getInstance();
+
+        l.log("Removing force user " + name);
         Predicate<ForceUser> filter = (ForceUser b) -> (b.getName().equalsIgnoreCase(name));
         v.removeIf(filter);
     }
     public void removeFU_planet(String planet) throws IOException {
-        Log.log("Removing force user " + planet);
+        l = Log.getInstance();
+
+        l.log("Removing force user " + planet);
         Predicate<ForceUser> filter = (ForceUser b) -> (b.getPlanet().equalsIgnoreCase(planet));
         v.removeIf(filter);
     }
     public void removeFU_era(StarWarsEra era) throws IOException {
-        Log.log("Removing force user born" + era);
+        l = Log.getInstance();
+
+        l.log("Removing force user born" + era);
         Predicate<ForceUser> filter = (ForceUser b) -> (b.getBorn().getEra().equals(era));
         v.removeIf(filter);
     }

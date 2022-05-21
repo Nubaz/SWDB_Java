@@ -13,10 +13,13 @@ public class BlasterService {
     ArrayList<Blaster> v = new ArrayList<>();
     WriteCsv wcsv = WriteCsv.getInstance();
     WriteDB wdb = WriteDB.getInstance();
+    Log l;
 
     //create
     public void addB(Blaster b, boolean read) throws IOException {
-        Log.log("Adding blaster: " + b.getName());
+        l = Log.getInstance();
+
+        l.log("Adding blaster: " + b.getName());
         if(!read) {
             wdb.blaster(b);
             wcsv.blaster(b);
@@ -30,17 +33,23 @@ public class BlasterService {
     }
 
     public void listB() throws IOException {
-        Log.log("Listing blasters");
+        l = Log.getInstance();
+
+        l.log("Listing blasters");
         v.forEach(System.out::println);
     }
 
     //delete
     public void removeB_index(int i) throws IOException {
-        Log.log("Removing blaster " + i);
+        l = Log.getInstance();
+
+        l.log("Removing blaster " + i);
         v.remove(i);
     }
     public void removeB_name(String name) throws IOException {
-        Log.log("Removing blaster " + name);
+        l = Log.getInstance();
+
+        l.log("Removing blaster " + name);
         Predicate<Blaster> filter = (Blaster b) -> (b.getName().equalsIgnoreCase(name));
         v.removeIf(filter);
     }

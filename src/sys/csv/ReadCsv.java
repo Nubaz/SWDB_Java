@@ -120,7 +120,9 @@ public class ReadCsv {
     }
 
     public void loadFiles(Service s) throws IOException, BadRankExp {
-        Log.log("Loading objects from .csv files...");
+        Log l = Log.getInstance();
+
+        l.log("Loading objects from .csv files...");
         blasters(s);
         lightsabers(s);
 
@@ -128,6 +130,6 @@ public class ReadCsv {
         forceusers(s);
         jedisiths(s);
         smugglers(s);
-        Log.log("Done loading!");
+        l.log("Done loading!");
     }
 }

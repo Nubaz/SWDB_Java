@@ -21,8 +21,9 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) throws IOException, BadRankExp {
         //testing
-        Log.clearLog();
-        Log.log("System startup");
+        Log l = Log.getInstance();
+        l.clearLog();
+        l.log("System startup");
 
         Service service = new Service();
 
@@ -36,7 +37,7 @@ public class Main {
 
             rdb.loadObjects(service);
         } catch (ClassNotFoundException | SQLException e) {
-            Log.log("Can't access database; switching to .csv files");
+            l.log("Can't access database; switching to .csv files");
             flag = false;
             rcsv.loadFiles(service);
         }
@@ -63,7 +64,7 @@ public class Main {
 
         if(flag) dbcon.closeConn();
 
-        Log.log("System shutdown");
-        Log.getBw().close();
+        l.log("System shutdown");
+        l.getBw().close();
     }
 }

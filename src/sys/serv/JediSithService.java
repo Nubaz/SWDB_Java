@@ -20,10 +20,13 @@ public class JediSithService {
     HashMap<Lightsaber, JediSith> map = new HashMap<>();
     WriteCsv wcsv = WriteCsv.getInstance();
     WriteDB wdb = WriteDB.getInstance();
+    Log l;
 
     //create
     public void addJS(JediSith js, boolean read) throws IOException {
-        Log.log("Adding jedi/sith: " + js.getName());
+        l = Log.getInstance();
+
+        l.log("Adding jedi/sith: " + js.getName());
         if(!read) {
             wdb.jedisith(js);
             wcsv.jedisith(js);
@@ -37,23 +40,31 @@ public class JediSithService {
     }
 
     public void listJS() throws IOException {
-        Log.log("Listing jedi/siths");
+        l = Log.getInstance();
+
+        l.log("Listing jedi/siths");
         v.forEach(System.out::println);
     }
     public void listJS_name() throws IOException {
-        Log.log("Listing jedi/siths by name");
+        l = Log.getInstance();
+
+        l.log("Listing jedi/siths by name");
         v.stream()
                 .sorted((p1,p2) -> p1.getName().compareToIgnoreCase(p2.getName()))
                 .forEach(System.out::println);
     }
     public void listJS_planet() throws IOException {
-        Log.log("Listing jedi/siths by planet");
+        l = Log.getInstance();
+
+        l.log("Listing jedi/siths by planet");
         v.stream()
                 .sorted((p1,p2) -> p1.getPlanet().compareToIgnoreCase(p2.getPlanet()))
                 .forEach(System.out::println);
     }
     public void listJS_born() throws IOException {
-        Log.log("Listing jedi/siths by date of birth");
+        l = Log.getInstance();
+
+        l.log("Listing jedi/siths by date of birth");
         v.stream()
                 .sorted((p1,p2) -> {
                     //same era, return year
@@ -74,26 +85,34 @@ public class JediSithService {
                 .forEach(System.out::println);
     }
     public void listJS_bounty() throws IOException {
-        Log.log("Listing jedi/siths by bounty");
+        l = Log.getInstance();
+
+        l.log("Listing jedi/siths by bounty");
         v.stream()
                 .sorted(Comparator.comparing(Character::getBounty))
                 .forEach(System.out::println);
     }
     public void listJS_yrs_practice() throws IOException {
-        Log.log("Listing jedi/siths by years of practice");
+        l = Log.getInstance();
+
+        l.log("Listing jedi/siths by years of practice");
         v.stream()
                 .sorted(Comparator.comparing(ForceUser::getYrs_practice))
                 .forEach(System.out::println);
     }
     public void listJedi() throws IOException {
-        Log.log("Listing jedi");
+        l = Log.getInstance();
+
+        l.log("Listing jedi");
         Predicate<JediSith> filter = (JediSith js) -> (js.getType().name().equals("Jedi"));
         v.stream()
                 .filter(filter)
                 .forEach(System.out::println);
     }
     public void listSith() throws IOException {
-        Log.log("Listing siths");
+        l = Log.getInstance();
+
+        l.log("Listing siths");
         Predicate<JediSith> filter = (JediSith js) -> (js.getType().name().equals("Sith"));
         v.stream()
                 .filter(filter)
@@ -101,7 +120,9 @@ public class JediSithService {
     }
 
     public void listMap() throws IOException {
-        Log.log("Listing jedi/sith - lightsabers binding");
+        l = Log.getInstance();
+
+        l.log("Listing jedi/sith - lightsabers binding");
         map.forEach((l, js) -> System.out.println(
                 js.getType() + ": " + js.getRank() + ", " + js.getName() + "\n" +
                 "Lightsaber: " + l.getType() + ", " + l.getHilt() + ", " + l.getColor()
@@ -109,42 +130,51 @@ public class JediSithService {
     }
 
     //update
-    public void addLightsaber(Lightsaber l, int i) throws IOException {
-        if(map.containsKey(l)) {
-            Log.log("Can't add: lightsaber already attached to someone");
+    public void addLightsaber(Lightsaber ls, int i) throws IOException {
+        l = Log.getInstance();
+        if(map.containsKey(ls)) {
+            l.log("Can't add: lightsaber already attached to someone");
         }
         else {
-            Log.log("Adding lightsaber " + l.getHilt() + " to jedi/sith " + i);
-            v.get(i).setLightsaber(l);
-            map.put(l, v.get(i));
+            l.log("Adding lightsaber " + ls.getHilt() + " to jedi/sith " + i);
+            v.get(i).setLightsaber(ls);
+            map.put(ls, v.get(i));
         }
     }
-    public void replaceOwner(Lightsaber l, JediSith js) throws IOException {
-        if(!map.containsKey(l))
-            Log.log("Can't replace: lightsaber isn't mapped to a jedi/sith");
+    public void replaceOwner(Lightsaber ls, JediSith js) throws IOException {
+        if(!map.containsKey(ls))
+            l.log("Can't replace: lightsaber isn't mapped to a jedi/sith");
         else {
-            Log.log("Changing owner of lightsaber " + l.getHilt() + " to " + js.getName());
-            map.replace(l, js);
+            l.log("Changing owner of lightsaber " + ls.getHilt() + " to " + js.getName());
+            map.replace(ls, js);
         }
     }
 
     //delete
     public void removeJS_index(int i) throws IOException {
-        Log.log("Removing jedi/sith " + i);
+        l = Log.getInstance();
+
+        l.log("Removing jedi/sith " + i);
         v.remove(i);
     }
     public void removeJS_name(String name) throws IOException {
-        Log.log("Removing jedi/sith " + name);
+        l = Log.getInstance();
+
+        l.log("Removing jedi/sith " + name);
         Predicate<JediSith> filter = (JediSith js) -> (js.getName().equalsIgnoreCase(name));
         v.removeIf(filter);
     }
     public void removeJS_planet(String planet) throws IOException {
-        Log.log("Removing jedi/sith " + planet);
+        l = Log.getInstance();
+
+        l.log("Removing jedi/sith " + planet);
         Predicate<JediSith> filter = (JediSith js) -> (js.getPlanet().equalsIgnoreCase(planet));
         v.removeIf(filter);
     }
     public void removeJS_era(StarWarsEra era) throws IOException {
-        Log.log("Removing jedi/sith born" + era);
+        l = Log.getInstance();
+
+        l.log("Removing jedi/sith born" + era);
         Predicate<JediSith> filter = (JediSith js) -> (js.getBorn().getEra().equals(era));
         v.removeIf(filter);
     }

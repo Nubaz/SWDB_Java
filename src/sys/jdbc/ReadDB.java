@@ -143,7 +143,9 @@ public class ReadDB {
 
     public void loadObjects(Service s) {
         try {
-            Log.log("Loading objects from MySQL database...");
+            Log l = Log.getInstance();
+
+            l.log("Loading objects from MySQL database...");
             DBConn dbconn = DBConn.getInstance();
             Statement stmt = dbconn.getConn().createStatement();
 
@@ -153,7 +155,7 @@ public class ReadDB {
             loadFU(s, stmt);
             loadJS(s, stmt);
             loadS(s, stmt);
-            Log.log("Done loading!");
+            l.log("Done loading!");
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
